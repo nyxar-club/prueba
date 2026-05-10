@@ -152,8 +152,19 @@ function buildFinalizarBtn(items) {
   lineas.push('');
   lineas.push('Quiero confirmar este pedido. ¿Cómo continúo?');
 
-  btn.href   = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(lineas.join('\n'));
-  btn.target = '_blank';
+// Guardar descuento para que pedido.html lo pueda leer
+if (descuentoActivo) {
+  sessionStorage.setItem('nyxar_descuento', JSON.stringify({
+    activo: true,
+    porciento: DESCUENTO_PORCIENTO
+  }));
+} else {
+  sessionStorage.removeItem('nyxar_descuento');
+}
+
+// Ir a la página de confirmación de pedido
+btn.href = 'pedido.html';
+btn.target = '_self';
 }
 
 // ─────────────────────────────────────────
